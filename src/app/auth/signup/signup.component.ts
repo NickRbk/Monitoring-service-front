@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticatedStoreService} from '../../shared/service/authenticated-store.service';
+import {Customer} from '../../shared/model/customer.model';
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +29,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    const {name, email, password, phone} = this.signupForm.value;
-    this.authenticatedStoreService.signUp();
+    this.authenticatedStoreService.signUp(this.signupForm.value);
   }
 }

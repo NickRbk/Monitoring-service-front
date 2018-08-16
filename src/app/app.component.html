@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container fxFlexFill>
   <mat-sidenav #sidenav role="navigation">
     <app-sidenav-list (closeSideNav)="sidenav.close()"
                       [currentUser]="currentUser"></app-sidenav-list>
@@ -12,44 +12,3 @@
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-
-
-<!--<section>-->
-  <!--<form [formGroup]="loginForm" (ngSubmit)="onSubmit()"-->
-        <!--fxLayout="column"-->
-        <!--*ngIf="!error; else errorBlock"-->
-        <!--fxLayoutAlign="center center"-->
-        <!--fxLayoutGap="10px">-->
-
-    <!--&lt;!&ndash;Email&ndash;&gt;-->
-    <!--<mat-form-field>-->
-      <!--<input type="email"-->
-             <!--matInput-->
-             <!--placeholder="Your email"-->
-             <!--formControlName="email">-->
-      <!--<mat-error *ngIf="loginForm.get('email').hasError('required')">Field must not be empty</mat-error>-->
-      <!--<mat-error *ngIf="!loginForm.get('email').hasError('required')">Email is invalid</mat-error>-->
-    <!--</mat-form-field>-->
-
-    <!--&lt;!&ndash;Password&ndash;&gt;-->
-    <!--<mat-form-field>-->
-      <!--<input type="password"-->
-             <!--matInput-->
-             <!--placeholder="Your password"-->
-             <!--formControlName="password">-->
-      <!--<mat-error *ngIf="loginForm.get('password').hasError('required')">Missing password</mat-error>-->
-    <!--</mat-form-field>-->
-
-    <!--<button type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">-->
-      <!--Submit-->
-    <!--</button>-->
-  <!--</form>-->
-
-  <!--<ng-template #errorBlock>-->
-    <!--<div id="error" fxLayoutAlign="center center">-->
-      <!--{{ error }}-->
-    <!--</div>-->
-  <!--</ng-template>-->
-<!--</section>-->
-

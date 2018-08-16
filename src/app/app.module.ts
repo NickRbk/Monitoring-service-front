@@ -7,13 +7,18 @@ import {MaterialModule} from './material.module';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import {AuthenticatedStoreService} from './shared/service/authenticated-store.service';
 import {AppRoutingModule} from './app.routing.module';
+import {AuthInterceptor} from './auth/auth-interceptor';
+import { ObjectivesComponent } from './objectives/objectives.component';
+import { TweetsComponent } from './tweets/tweets.component';
+import {ObjectivesService} from './shared/service/objectives.service';
+import { EditObjectiveComponent } from './objectives/edit-objective/edit-objective.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,10 @@ import {AppRoutingModule} from './app.routing.module';
     SidenavListComponent,
     LoginComponent,
     SignupComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ObjectivesComponent,
+    TweetsComponent,
+    EditObjectiveComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +42,11 @@ import {AppRoutingModule} from './app.routing.module';
     FormsModule,
     AppRoutingModule
   ],
-  providers: [AuthenticatedStoreService],
+  providers: [
+    AuthenticatedStoreService,
+    ObjectivesService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

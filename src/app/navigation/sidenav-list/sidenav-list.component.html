@@ -7,7 +7,11 @@
     <mat-icon>input</mat-icon>
     <span class="nav-caption">Login</span>
   </a>
-  <a mat-list-item routerLink="/auth/media" (click)="onClose()" *ngIf="currentUser">
+  <a mat-list-item routerLink="/objectives" (click)="onClose()" *ngIf="currentUser">
+    <mat-icon>event_note</mat-icon>
+    <span class="nav-caption">Objectives</span>
+  </a>
+  <a mat-list-item routerLink="/media" (click)="onClose()" *ngIf="currentUser">
     <mat-icon>event_note</mat-icon>
     <span class="nav-caption">Media</span>
   </a>

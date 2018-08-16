@@ -1,0 +1,49 @@
+#mainBlock {
+  padding: 30px;
+}
+
+#settings {
+  color: darkblue;
+}
+
+.mat-card-header-text {
+  margin: 0;
+}
+
+
+#addObjectiveIcon {
+  margin: 1px;
+  font-size: 2em;
+  color: green;
+}
+
+mat-card {
+  margin-top: 20px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+button mat-icon {
+  vertical-align: top;
+}
+
+.material-icons {
+  vertical-align: bottom;
+}
+
+mat-card-footer {
+  margin: 0 5px;
+}
+

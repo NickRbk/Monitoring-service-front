@@ -4,11 +4,20 @@ import {SignupComponent} from './auth/signup/signup.component';
 import {LoginComponent} from './auth/login/login.component';
 import {NgModule} from '@angular/core';
 import {AuthGuardService} from './auth/auth-guard.service';
+import {ObjectivesComponent} from './objectives/objectives.component';
+import {TweetsComponent} from './tweets/tweets.component';
+import {EditObjectiveComponent} from './objectives/edit-objective/edit-objective.component';
 
 const appRoutes: Routes = [
   {path: '', component: WelcomeComponent, pathMatch: 'full'},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'objectives', canActivate: [AuthGuardService], children: [
+      {path: '', component: ObjectivesComponent},
+      {path: 'new', component: EditObjectiveComponent},
+      {path: ':id/edit', component: EditObjectiveComponent}
+    ]},
+  {path: 'media', canActivate: [AuthGuardService], component: TweetsComponent},
   {path: '**', redirectTo: ''}
 ];
 
