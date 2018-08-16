@@ -12,7 +12,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import {AuthenticatedStoreService} from './shared/service/authenticated-store.service';
+import {AuthService} from './shared/service/auth.service';
 import {AppRoutingModule} from './app.routing.module';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import { ObjectivesComponent } from './objectives/objectives.component';
@@ -43,7 +43,7 @@ import { EditObjectiveComponent } from './objectives/edit-objective/edit-objecti
     AppRoutingModule
   ],
   providers: [
-    AuthenticatedStoreService,
+    AuthService,
     ObjectivesService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],

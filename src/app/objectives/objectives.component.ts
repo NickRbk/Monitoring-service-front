@@ -14,13 +14,6 @@ export class ObjectivesComponent implements OnInit {
 
   ngOnInit() {
     this.objectives = this.objectivesService.getObjectives();
-    this.objectivesService.objectives
-      .subscribe(
-        objectives => {
-          this.objectives = objectives;
-          this.loading = false;
-        }
-      );
   }
 
   shareObjective(objective) {

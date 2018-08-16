@@ -1,20 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthenticatedStoreService} from '../../shared/service/authenticated-store.service';
-import {Customer} from '../../shared/model/customer.model';
+import {AuthService} from '../../shared/service/auth.service';
+import {ErrorService} from '../../shared/service/error.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+
+export class SignupComponent implements OnInit, OnDestroy {
   signupForm: FormGroup;
+  private errorSub: Subscription;
   error = '';
 
-  constructor(private authenticatedStoreService: AuthenticatedStoreService) { }
+  constructor(private authenticatedStoreService: AuthService,
+              private errorService: ErrorService) { }
 
   ngOnInit() {
+    this.errorSub = this.errorService.errorListener
+      .subscribe(error => this.error = error);
+
     this.signupForm = new FormGroup({
       'firstName': new FormControl(null, [Validators.required]),
       'lastName': new FormControl(null, [Validators.required]),
@@ -23,12 +30,13 @@ export class SignupComponent implements OnInit {
       'phoneNumber': new FormControl(null, [Validators.required, Validators.minLength(10)]),
       'agree': new FormControl(null, [Validators.required])
     });
-
-    this.authenticatedStoreService.authError
-      .subscribe(error => this.error = error);
   }
 
   onSubmit() {
     this.authenticatedStoreService.signUp(this.signupForm.value);
+  }
+
+  ngOnDestroy() {
+    this.errorSub.unsubscribe();
   }
 }

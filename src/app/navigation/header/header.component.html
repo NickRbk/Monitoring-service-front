@@ -5,12 +5,11 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div><a routerLink="/" *ngIf="!currentUser">Logo</a></div>
-  <div><a routerLink="/auth" *ngIf="currentUser">Logo</a></div>
+  <div><a routerLink="/">Logo</a></div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout class="navigation-items"
         fxLayoutGap="10px"
-        *ngIf="!currentUser; else authorized">
+        *ngIf="!userIsAuthenticated || !currentUser; else authorized">
       <li>
         <a routerLink="/signup">SignUp</a>
       </li>
@@ -29,7 +28,7 @@
         </li>
         <li id="currentUser">{{ currentUser['email'] }} | {{ currentUser['firstName'] }} {{ currentUser['lastName'] }}</li>
         <li>
-          <a (click)="logout()">Logout</a>
+          <button mat-button (click)="onLogout()">Logout</button>
         </li>
       </ul>
     </ng-template>

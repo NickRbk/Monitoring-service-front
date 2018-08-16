@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthenticatedStoreService} from '../../shared/service/authenticated-store.service';
+import {AuthService} from '../../shared/service/auth.service';
+import {ErrorService} from '../../shared/service/error.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   error = '';
 
-  constructor(private authenticatedStoreService: AuthenticatedStoreService) { }
+  constructor(private authenticatedStoreService: AuthService,
+              private errorService: ErrorService) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -19,7 +21,7 @@ export class LoginComponent implements OnInit {
       'password': new FormControl(null, [Validators.required])
     });
 
-    this.authenticatedStoreService.authError
+    this.errorService.errorListener
       .subscribe(error => this.error = error);
   }
 
