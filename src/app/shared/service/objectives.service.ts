@@ -5,6 +5,7 @@ import {Customer} from '../model/customer.model';
 import {ErrorService} from './error.service';
 import {SocialMediaService} from './social-media.service';
 import {Router} from '@angular/router';
+import {EnvConst} from '../constants/env.const';
 
 @Injectable()
 export class ObjectivesService {
@@ -14,6 +15,7 @@ export class ObjectivesService {
   constructor(private httpClient: HttpClient,
               private router: Router,
               private socialMediaService: SocialMediaService,
+              private envConst: EnvConst,
               private errorService: ErrorService) {}
 
   getObjectivesListener() {
@@ -29,61 +31,47 @@ export class ObjectivesService {
   }
 
   getObjectives() {
-    this.httpClient.get<Customer>('http://localhost:8080/api/users/')
+    this.httpClient.get<Customer>(this.envConst.BACKEND_URL + '/api/users/')
       .subscribe(
         objectives => this.objectivesListener.next(objectives),
-        err => {
-          this.errorService.errorListener.next(err['message']);
-          this.errorService.setErrorTimeOut();
-        }
+        err => this.errorService.triggerErrorMessage(err['massage'])
       );
   }
 
-  saveObjective(body) {
-    const url = 'http://localhost:8080/api/users/';
-
-    this.httpClient.post(url, {
-      firstName: body['firstName'],
-      lastName: body['lastName']
-    }).subscribe(
-      (id: string) => {
-        this.socialMediaService.updateTwitterProfile(+id, body['alias']);
-      },
-      err => {
-        this.errorService.errorListener.next(err['message']);
-        this.errorService.setErrorTimeOut();
-      }
-    );
+  checkAlias(alias: string) {
+    return new Promise((resolve, reject) => {
+      this.httpClient.get<boolean>(this.envConst.BACKEND_URL + `/api/media/${alias}`)
+        .subscribe(
+          (isExist: boolean) => isExist ? resolve() : reject(),
+          err => this.errorService.triggerErrorMessage(err['massage'])
+        );
+    });
   }
 
-  updateObjective(id: number, body) {
-    const url = `http://localhost:8080/api/users/${id}`;
-
-    this.httpClient.patch(url, {
-      firstName: body['firstName'],
-      lastName: body['lastName']
-    }).subscribe(
-      () => {
-        this.socialMediaService.updateTwitterProfile(id, body['alias']);
-      },
-      err => {
-        this.errorService.errorListener.next(err['message']);
-        this.errorService.setErrorTimeOut();
-      }
-    );
+  save(body) {
+    return new Promise((resolve) => {
+      this.httpClient.post(this.envConst.BACKEND_URL + '/api/users/', body).subscribe(
+        (id: number) => resolve(id),
+        err => this.errorService.triggerErrorMessage(err['massage'])
+      );
+    });
   }
 
-  deleteObjective(id: number) {
-    const url = `http://localhost:8080/api/users/${id}`;
-    this.httpClient.delete(url)
+  update(id: number, body) {
+    return new Promise((resolve) => {
+      this.httpClient.patch(this.envConst.BACKEND_URL + `/api/users/${id}`, body).subscribe(
+        () => resolve(),
+        err => this.errorService.triggerErrorMessage(err['massage'])
+
+      );
+    });
+  }
+
+  delete(id: number) {
+    this.httpClient.delete(this.envConst.BACKEND_URL + `/api/users/${id}`)
       .subscribe(
-        () => {
-          this.router.navigate(['/objectives']);
-        },
-        err => {
-          this.errorService.errorListener.next(err['message']);
-          this.errorService.setErrorTimeOut();
-        }
+        () => this.router.navigate(['/objectives']),
+        err => this.errorService.triggerErrorMessage(err['massage'])
       );
   }
 }

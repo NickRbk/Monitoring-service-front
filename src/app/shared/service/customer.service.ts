@@ -3,6 +3,7 @@ import {Subject} from 'rxjs';
 import {Customer} from '../model/customer.model';
 import {HttpClient} from '@angular/common/http';
 import {ErrorService} from './error.service';
+import {EnvConst} from '../constants/env.const';
 
 @Injectable({ providedIn: 'root' })
 export class CustomerService {
@@ -18,20 +19,18 @@ export class CustomerService {
   }
 
   constructor(private httpClient: HttpClient,
+              private envConst: EnvConst,
               private errorService: ErrorService) {}
 
   public fetchCustomer() {
-    this.httpClient.get<Customer>('http://localhost:8080/auth')
+    this.httpClient.get<Customer>(this.envConst.BACKEND_URL + '/auth')
       .subscribe(
         customer => {
           this.currentUser = customer;
           this.saveCurrentUserData(customer);
           this.currentUserListener.next(customer);
         },
-        err => {
-          this.errorService.errorListener.next(err['message']);
-          this.errorService.setErrorTimeOut();
-        }
+        err => this.errorService.triggerErrorMessage(err['message'])
       );
   }
 

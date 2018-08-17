@@ -1,4 +1,4 @@
-export interface AuthDataModel {
+export interface CustomerSignup {
     email: string;
     firstName: string;
     lastName: string;

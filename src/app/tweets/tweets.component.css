@@ -1,0 +1,56 @@
+.mat-form-field {
+  width: 160px;
+}
+mat-icon, mat-card-subtitle, .iconText {
+  vertical-align: middle;
+  font-size: 1em;
+  padding-right: 4px;
+}
+
+.icons {
+  padding-top: 10px;
+}
+
+.dateTime {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.footer {
+  margin-bottom: 0;
+}
+
+.authors {
+  font-size: 1.5em;
+}
+
+mat-card-subtitle {
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+
+mat-card-content {
+  margin: 0;
+}
+
+mat-card {
+  padding-bottom: 0;
+  margin-bottom: 10px;
+}
+
+mat-card-title {
+  margin: 0;
+}
+
+.tweets {
+  margin: 20px;
+}
+
+.sorting {
+  padding-left: 10px;
+}
+
+mat-radio-group {
+  padding: 0 20px;
+}
+

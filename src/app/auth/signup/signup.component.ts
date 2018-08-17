@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   private errorSub: Subscription;
   error = '';
 
-  constructor(private authenticatedStoreService: AuthService,
+  constructor(private authService: AuthService,
               private errorService: ErrorService) { }
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.authenticatedStoreService.signUp(this.signupForm.value);
+    this.authService.signUp(this.signupForm.value);
   }
 
   ngOnDestroy() {

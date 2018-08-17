@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   error = '';
 
-  constructor(private authenticatedStoreService: AuthService,
+  constructor(private authService: AuthService,
               private errorService: ErrorService) { }
 
   ngOnInit() {
@@ -27,6 +27,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const {email, password} = this.loginForm.value;
-    this.authenticatedStoreService.logIn(email, password);
+    this.authService.logIn(email, password);
   }
 }

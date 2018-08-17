@@ -5,7 +5,11 @@ import {Injectable} from '@angular/core';
 export class ErrorService {
   errorListener = new Subject<string>();
 
-  setErrorTimeOut() {
+  triggerErrorMessage(err: string) {
+    this.errorListener.next(err);
+    this.setErrorTimeOut();
+  }
+  private setErrorTimeOut() {
     setTimeout(() => {
       this.errorListener.next('');
     }, 2000);

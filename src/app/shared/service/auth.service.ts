@@ -4,9 +4,10 @@ import {Customer} from '../model/customer.model';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {HttpHeaders} from '@angular/common/http';
-import {AuthDataModel} from '../model/auth-data.model';
 import {CustomerService} from './customer.service';
 import {ErrorService} from './error.service';
+import {EnvConst} from '../constants/env.const';
+import {CustomerSignup} from '../model/customer-signup.model';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(private httpClient: HttpClient,
               private router: Router,
               private errorService: ErrorService,
+              private envConst: EnvConst,
               private customerService: CustomerService) {}
 
   getToken() {
@@ -28,14 +30,11 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  signUp(customer: AuthDataModel) {
-    this.httpClient.post('http://localhost:8080/auth/sign-up', customer)
+  signUp(customer: CustomerSignup) {
+    this.httpClient.post(this.envConst.BACKEND_URL + '/auth/sign-up', customer)
       .subscribe(
         () => this.logIn(customer.email, customer.password),
-        err => {
-          this.errorService.errorListener.next(err['message']);
-          this.errorService.setErrorTimeOut();
-        }
+        err => this.errorService.triggerErrorMessage(err['message'])
       );
   }
 
@@ -45,7 +44,7 @@ export class AuthService {
       observe: 'response' as 'response'
     };
 
-    this.httpClient.post<{email: string, password: string}>('http://localhost:8080/login',
+    this.httpClient.post<{email: string, password: string}>(this.envConst.BACKEND_URL + '/login',
       {email, password}, httpOptions)
       .subscribe(
         res => {
@@ -63,10 +62,7 @@ export class AuthService {
 
           this.router.navigate(['/']);
         },
-        err => {
-          this.errorService.errorListener.next(err['message']);
-          this.errorService.setErrorTimeOut();
-        }
+        err => this.errorService.triggerErrorMessage(err['message'])
       );
   }
 

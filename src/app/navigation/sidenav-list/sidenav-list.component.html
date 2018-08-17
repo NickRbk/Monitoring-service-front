@@ -11,9 +11,10 @@
     <mat-icon>event_note</mat-icon>
     <span class="nav-caption">Objectives</span>
   </a>
-  <a mat-list-item routerLink="/media" (click)="onClose()" *ngIf="userIsAuthenticated">
+  <a mat-list-item routerLink="/media"
+     (click)="onClose()" *ngIf="userIsAuthenticated">
     <mat-icon>event_note</mat-icon>
-    <span class="nav-caption">Media</span>
+    <span class="nav-caption">Tweets</span>
   </a>
   <a mat-list-item (click)="onClose()" *ngIf="userIsAuthenticated">
     <mat-icon>eject</mat-icon>

@@ -5,10 +5,10 @@ import {AuthService} from '../shared/service/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authenticatedStoreService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authToken = this.authenticatedStoreService.getToken();
+    const authToken = this.authService.getToken();
     if (authToken) {
       const authRequest = req.clone({
         headers: req.headers.set('Authorization', authToken)

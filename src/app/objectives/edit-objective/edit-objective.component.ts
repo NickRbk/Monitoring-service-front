@@ -69,13 +69,30 @@ export class EditObjectiveComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.editMode) {
-      this.objectivesService.updateObjective(this.id, this.objectiveForm.value);
-    } else {
-      this.objectivesService.saveObjective(this.objectiveForm.value);
-    }
+    const {firstName, lastName, alias} = this.objectiveForm.value;
 
+    this.objectivesService.checkAlias(alias)
+      .then(() => {
+        if (this.editMode) {
+          this.objectivesService.update(this.id, {firstName, lastName})
+            .then(() => {
+              this.socialMediaService.updateTwitterProfile(this.id, alias)
+                .then(() => this.onSuccessSubmit());
+            });
+        } else {
+          this.objectivesService.save({firstName, lastName})
+            .then((id: number) => {
+              this.socialMediaService.updateTwitterProfile(id, alias)
+                .then(() => this.onSuccessSubmit());
+            });
+        }
+      })
+      .catch(() => this.errorService.triggerErrorMessage('ALIAS NOT FOUND'));
+  }
+
+  private onSuccessSubmit() {
     this.objectivesService.getObjectives();
+    this.router.navigate(['/objectives']);
   }
 
   onCancel() {
@@ -87,7 +104,7 @@ export class EditObjectiveComponent implements OnInit, OnDestroy {
   }
 
   onRemove() {
-    this.objectivesService.deleteObjective(this.id);
+    this.objectivesService.delete(this.id);
     this.objectivesService.getObjectives();
   }
 }

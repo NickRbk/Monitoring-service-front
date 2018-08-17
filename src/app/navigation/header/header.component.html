@@ -5,7 +5,7 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div><a routerLink="/">Logo</a></div>
+  <div><a routerLink="/">Monitoring Service</a></div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout class="navigation-items"
         fxLayoutGap="10px"
@@ -28,7 +28,7 @@
         </li>
         <li id="currentUser">{{ currentUser['email'] }} | {{ currentUser['firstName'] }} {{ currentUser['lastName'] }}</li>
         <li>
-          <button mat-button (click)="onLogout()">Logout</button>
+          <a routerLink="/" (click)="onLogout()">Logout</a>
         </li>
       </ul>
     </ng-template>

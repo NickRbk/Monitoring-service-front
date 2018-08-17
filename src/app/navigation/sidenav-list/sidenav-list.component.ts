@@ -15,11 +15,11 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   @Output() closeSideNav = new EventEmitter<void>();
   @Input() currentUser: Customer;
 
-  constructor(private authenticatedStoreService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.userIsAuthenticated = this.authenticatedStoreService.getIsAuth();
-    this.authStatusSub = this.authenticatedStoreService
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => this.userIsAuthenticated = isAuthenticated);
   }
@@ -29,7 +29,7 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.authenticatedStoreService.logout();
+    this.authService.logout();
   }
 
   onClose() {
