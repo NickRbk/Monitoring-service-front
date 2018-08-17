@@ -36,7 +36,7 @@ export class CustomerService {
   }
 
   private saveCurrentUserData(customer: Customer) {
-    localStorage.setItem('c:id', customer.id.toString());
+    localStorage.setItem('c:id', `${customer.id}`);
     localStorage.setItem('c:email', customer.email);
     localStorage.setItem('c:firstName', customer.firstName);
     localStorage.setItem('c:lastName', customer.lastName);

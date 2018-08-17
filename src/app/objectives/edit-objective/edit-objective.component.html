@@ -1,5 +1,11 @@
 <section class="edit-objective" fxLayoutAlign="center center" *ngIf="objectiveForm">
-  <form [formGroup]="objectiveForm" (ngSubmit)="onSubmit()" fxFlex.xs="100%" fxFlex="400px" fxLayoutGap="10px">
+  <form [formGroup]="objectiveForm"
+        (ngSubmit)="onSubmit()"
+        fxFlex.xs="100%"
+        fxFlex="400px"
+        fxLayoutGap="10px"
+        *ngIf="!error; else errorBlock">
+
     <mat-card-actions fxLayoutAlign="space-between">
       <button mat-raised-button type="submit" [disabled]="objectiveForm.invalid">
         {{ changeSaveButtonLabel() }}
@@ -33,7 +39,13 @@
     </mat-form-field>
 
     <mat-card-actions *ngIf="editMode" fxFlexAlign="end">
-      <button mat-raised-button type="button" (click)="onRemove()">DELETE OBJECTIVE</button>
+      <button mat-raised-button color="warn" type="button" (click)="onRemove()">DELETE OBJECTIVE</button>
     </mat-card-actions>
   </form>
+
+  <ng-template #errorBlock>
+    <div id="error" fxLayoutAlign="center center">
+      {{ error }}
+    </div>
+  </ng-template>
 </section>

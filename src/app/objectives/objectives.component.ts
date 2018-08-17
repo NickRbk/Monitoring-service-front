@@ -1,23 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ObjectivesService} from '../shared/service/objectives.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-objectives',
   templateUrl: './objectives.component.html',
   styleUrls: ['./objectives.component.css']
 })
-export class ObjectivesComponent implements OnInit {
+
+export class ObjectivesComponent implements OnInit, OnDestroy {
   loading = true;
   objectives;
+  private objectivesSub: Subscription;
 
   constructor(private objectivesService: ObjectivesService) { }
 
   ngOnInit() {
-    this.objectives = this.objectivesService.getObjectives();
+    this.objectivesService.getObjectives();
+    this.objectivesSub = this.objectivesService
+      .getObjectivesListener()
+      .subscribe(objectives => {
+        this.objectives = objectives;
+        this.loading = false;
+      });
   }
 
   shareObjective(objective) {
-    console.log(objective);
-    this.objectivesService.objective.next(objective);
+    this.objectivesService.setObjective(objective);
+  }
+
+  ngOnDestroy() {
+    // this.objectivesSub.unsubscribe();
   }
 }
