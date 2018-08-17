@@ -3,8 +3,8 @@ const path = require('path');
 bodyParser = require('body-parser');
 
 const app = express(),
-  port = process.env.PORT || 4200,
-  host = process.env.HOST || 'localhost';
+  port = process.env.PORT,
+  host = process.env.HOST;
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
