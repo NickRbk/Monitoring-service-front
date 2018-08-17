@@ -13,6 +13,8 @@ import {ErrorService} from '../../shared/service/error.service';
 })
 export class EditObjectiveComponent implements OnInit, OnDestroy {
   objectiveForm: FormGroup;
+  onSaving = false;
+
   id: number;
   editMode = false;
   objective;
@@ -70,24 +72,28 @@ export class EditObjectiveComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const {firstName, lastName, alias} = this.objectiveForm.value;
+    this.onSaving = true;
 
-    this.objectivesService.checkAlias(alias)
+    this.objectivesService.checkAlias(alias.toLowerCase())
       .then(() => {
         if (this.editMode) {
           this.objectivesService.update(this.id, {firstName, lastName})
             .then(() => {
-              this.socialMediaService.updateTwitterProfile(this.id, alias)
+              this.socialMediaService.updateTwitterProfile(this.id, alias.toLowerCase())
                 .then(() => this.onSuccessSubmit());
             });
         } else {
           this.objectivesService.save({firstName, lastName})
             .then((id: number) => {
-              this.socialMediaService.updateTwitterProfile(id, alias)
+              this.socialMediaService.updateTwitterProfile(id, alias.toLowerCase())
                 .then(() => this.onSuccessSubmit());
             });
         }
       })
-      .catch(() => this.errorService.triggerErrorMessage('ALIAS NOT FOUND'));
+      .catch(() => {
+        this.onSaving = false;
+        this.errorService.triggerErrorMessage('ALIAS NOT FOUND')
+      });
   }
 
   private onSuccessSubmit() {
@@ -96,7 +102,7 @@ export class EditObjectiveComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
-    console.log('CANCELED');
+    this.router.navigate(['/objectives']);
   }
 
   changeSaveButtonLabel() {
