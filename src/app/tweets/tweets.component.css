@@ -1,6 +1,11 @@
 .mat-form-field {
-  width: 160px;
+  width: 120px;
 }
+
+.mat-form-field {
+  margin-left: 10px;
+}
+
 mat-icon, mat-card-subtitle, .iconText {
   vertical-align: middle;
   font-size: 1em;
@@ -51,6 +56,8 @@ mat-card-title {
 }
 
 mat-radio-group {
-  padding: 0 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
 }
 

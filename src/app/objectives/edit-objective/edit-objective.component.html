@@ -8,9 +8,10 @@
 <ng-template #mainBlock>
   <section class="edit-objective" fxLayoutAlign="center center" *ngIf="objectiveForm">
     <form [formGroup]="objectiveForm"
+          fxLayout="column"
           (ngSubmit)="onSubmit()"
-          fxFlex.xs="100%"
           fxFlex="400px"
+          fxFlex.xs="80%"
           fxLayoutGap="10px"
           *ngIf="!error; else errorBlock">
 
