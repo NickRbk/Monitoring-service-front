@@ -9,26 +9,28 @@
   <section class="main-section" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
     <section class="tweets" fxFlexAlign="start" fxFlex.lt-md="100%" fxFlex="70%" fxLayout="column" fxFlexOrder.lt-md="2">
       <mat-card *ngFor="let tweet of tweets">
+        <small class="date">{{ tweet['createdAt'] | dateTransformer }}</small>
         <mat-card-title>
           <h5 class="dateTime">{{ tweet['text'] }} </h5>
-          <section class="icons" fxLayoutAlign="end start">
-            <small>
-              <mat-icon mat-list-icon>favorite</mat-icon>
-              <span class="iconText">{{ tweet['favouritesCount'] }}</span>
+          <hr>
+          <section fxLayoutAlign="space-between">
+            <small class="full-text" *ngIf="tweet['textUrl']">
+              <a [href]="tweet['textUrl']"
+                 target="_blank">Full text</a>
             </small>
-            <small>
-              <mat-icon mat-list-icon>share</mat-icon>
-              <span class="iconText">{{ tweet['retweetCount'] }}</span>
-            </small>
+
+            <section class="icons" fxLayoutAlign="end start">
+              <small>
+                <mat-icon mat-list-icon class="fav">favorite</mat-icon>
+                <span class="iconText">{{ tweet['favouritesCount'] }}</span>
+              </small>
+              <small>
+                <mat-icon mat-list-icon class="share">share</mat-icon>
+                <span class="iconText">{{ tweet['retweetCount'] }}</span>
+              </small>
+            </section>
           </section>
         </mat-card-title>
-
-        <mat-card-subtitle fxLayout="column">
-          <small *ngIf="tweet['textUrl']">
-            <a [href]="tweet['textUrl']"
-               target="_blank">Full text</a>
-          </small>
-        </mat-card-subtitle>
 
         <mat-card-content fxLayoutAlign="start" fxLayout="column">
 

@@ -13,12 +13,20 @@ mat-icon, mat-card-subtitle, .iconText {
 }
 
 .icons {
-  padding-top: 10px;
+  zoom: .7;
 }
 
 .dateTime {
-  margin-top: 5px;
+  margin-top: 15px;
   margin-bottom: 5px;
+}
+
+.fav {
+  color: red;
+}
+
+.share {
+  color: blue;
 }
 
 .footer {
@@ -29,7 +37,14 @@ mat-icon, mat-card-subtitle, .iconText {
   font-size: 1.5em;
 }
 
-mat-card-subtitle {
+.full-text {
+  padding-top: 5px;
+  margin-bottom: 0;
+  font-size: .6em;
+  color: grey;
+}
+
+.mat-card-subtitle {
   padding-top: 5px;
   margin-bottom: 0;
 }

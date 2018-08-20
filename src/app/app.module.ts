@@ -19,6 +19,7 @@ import { ObjectivesComponent } from './objectives/objectives.component';
 import { TweetsComponent } from './tweets/tweets.component';
 import {ObjectivesService} from './shared/service/objectives.service';
 import { EditObjectiveComponent } from './objectives/edit-objective/edit-objective.component';
+import {DateTransformerPipe} from './shared/pipes/dateTransformer.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EditObjectiveComponent } from './objectives/edit-objective/edit-objecti
     WelcomeComponent,
     ObjectivesComponent,
     TweetsComponent,
-    EditObjectiveComponent
+    EditObjectiveComponent,
+    DateTransformerPipe
   ],
   imports: [
     BrowserModule,
