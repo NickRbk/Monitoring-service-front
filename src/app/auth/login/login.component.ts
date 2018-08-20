@@ -9,6 +9,8 @@ import {ErrorService} from '../../shared/service/error.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  onLoading = false;
   loginForm: FormGroup;
   error = '';
 
@@ -22,11 +24,15 @@ export class LoginComponent implements OnInit {
     });
 
     this.errorService.errorListener
-      .subscribe(error => this.error = error);
+      .subscribe(error => {
+        this.onLoading = false;
+        this.error = error;
+      });
   }
 
   onSubmit() {
     const {email, password} = this.loginForm.value;
+    this.onLoading = true;
     this.authService.logIn(email, password);
   }
 }

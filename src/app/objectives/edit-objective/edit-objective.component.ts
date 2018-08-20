@@ -92,7 +92,7 @@ export class EditObjectiveComponent implements OnInit, OnDestroy {
       })
       .catch(() => {
         this.onSaving = false;
-        this.errorService.triggerErrorMessage('ALIAS NOT FOUND')
+        this.errorService.triggerErrorMessage('ALIAS NOT FOUND');
       });
   }
 

@@ -5,7 +5,7 @@
 </section>
 
 <ng-template #mainBlock>
-  <section id="mainBlock" fxLayout="row wrap" fxLayoutAlign fxLayoutGap.gt-xs="20px">
+  <section id="mainBlock" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-xs="20px">
     <a routerLink="new" fxFlex="100%" fxLayoutAlign="end start">
       <mat-icon id="addObjectiveIcon">library_add</mat-icon>
     </a>
@@ -54,7 +54,7 @@
         </mat-card-footer>
       </section>
       <ng-template #invalidProfile>
-        <mat-card-subtitle flexLayoutAlign="center  center">
+        <mat-card-subtitle flexLayoutAlign="center center">
           Please provide valid Twitter nickname ..(
         </mat-card-subtitle>
       </ng-template>

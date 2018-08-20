@@ -11,6 +11,7 @@ import {Subscription} from 'rxjs';
 })
 
 export class SignupComponent implements OnInit, OnDestroy {
+  onLoading = false;
   signupForm: FormGroup;
   private errorSub: Subscription;
   error = '';
@@ -20,7 +21,10 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.errorSub = this.errorService.errorListener
-      .subscribe(error => this.error = error);
+      .subscribe(error => {
+        this.onLoading = false;
+        this.error = error;
+      });
 
     this.signupForm = new FormGroup({
       'firstName': new FormControl(null, [Validators.required]),
@@ -33,6 +37,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.onLoading = true;
     this.authService.signUp(this.signupForm.value);
   }
 

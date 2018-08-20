@@ -13,6 +13,8 @@ import {SortCriteria} from '../shared/model/sort-criteria.model';
 })
 export class TweetsComponent implements OnInit, OnDestroy {
 
+  onLoading = true;
+  onPaginatorChange = false;
   private errorSub: Subscription;
 
   page = 0;
@@ -32,7 +34,6 @@ export class TweetsComponent implements OnInit, OnDestroy {
 
   totalCount: number;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  pageEvent: PageEvent;
   tweets: [any];
 
   error = '';
@@ -50,29 +51,34 @@ export class TweetsComponent implements OnInit, OnDestroy {
       .then((res) => {
         this.totalCount = res['totalElements'];
         this.tweets = res['content'];
+        this.onLoading = false;
       });
   }
 
-  onPaginator() {
-    const page = this.pageEvent ? this.pageEvent['pageIndex'] : 0;
-    this.size = this.pageEvent.pageSize;
+  onPaginator(pageEvent: PageEvent) {
+    document.querySelector('#header').scrollIntoView();
+    this.page = pageEvent['pageIndex'];
+    this.size = pageEvent['pageSize'];
 
-    this.tweetService.fetchTweets(page, this.size, this.orderBy, this.direction)
+    this.onPaginatorChange = true;
+    this.tweetService.fetchTweets(this.page, this.size, this.orderBy, this.direction)
       .then(
         res => {
           this.totalCount = res['totalElements'];
           this.tweets = res['content'];
-          document.querySelector('#header') .scrollIntoView();
+          this.onPaginatorChange = false;
         }
       );
   }
 
   onSortSelector() {
+    this.onLoading = true;
     this.tweetService.fetchTweets(0, this.size, this.orderBy, this.direction)
       .then(
         res => {
           this.totalCount = res['totalElements'];
           this.tweets = res['content'];
+          this.onLoading = false;
         }
       );
   }
