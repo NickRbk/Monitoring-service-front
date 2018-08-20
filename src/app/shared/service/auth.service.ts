@@ -60,7 +60,7 @@ export class AuthService {
 
           this.customerService.fetchCustomer();
 
-          this.router.navigate(['/']);
+          this.router.navigate(['/objectives']);
         },
         err => this.errorService.triggerErrorMessage(err['message'])
       );

@@ -1,94 +1,83 @@
-<section *ngIf="onLoading; else mainBlock">
+<section *ngIf="onLoading">
   <mat-progress-bar
     color="warn"
     mode="indeterminate">
   </mat-progress-bar>
 </section>
 
-<ng-template #mainBlock>
-  <section *ngIf="onPaginatorChange">
-    <mat-progress-bar
-      color="warn"
-      mode="indeterminate">
-    </mat-progress-bar>
-  </section>
-
-  <section  *ngIf="tweets && tweets.length > 0; else noData">
-    <section class="tweets" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
-      <section fxFlexAlign="start" fxFlex.lt-md="100%" fxFlex="70%" fxLayout="column" fxFlexOrder.lt-md="2">
-        <mat-card *ngFor="let tweet of tweets">
-          <mat-card-title>
-            <h5 class="dateTime">{{ tweet['text'] }} </h5>
-            <section class="icons" fxLayoutAlign="end start">
-              <small>
-                <mat-icon mat-list-icon>favorite</mat-icon>
-                <span class="iconText">{{ tweet['favouritesCount'] }}</span>
-              </small>
-              <small>
-                <mat-icon mat-list-icon>share</mat-icon>
-                <span class="iconText">{{ tweet['retweetCount'] }}</span>
-              </small>
-            </section>
-          </mat-card-title>
-
-          <mat-card-subtitle fxLayout="column">
-            <small *ngIf="tweet['textUrl']">
-              <a [href]="tweet['textUrl']"
-                 target="_blank">Full text</a>
+<section  *ngIf="tweets && tweets.length > 0">
+  <section class="main-section" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+    <section class="tweets" fxFlexAlign="start" fxFlex.lt-md="100%" fxFlex="70%" fxLayout="column" fxFlexOrder.lt-md="2">
+      <mat-card *ngFor="let tweet of tweets">
+        <mat-card-title>
+          <h5 class="dateTime">{{ tweet['text'] }} </h5>
+          <section class="icons" fxLayoutAlign="end start">
+            <small>
+              <mat-icon mat-list-icon>favorite</mat-icon>
+              <span class="iconText">{{ tweet['favouritesCount'] }}</span>
             </small>
-          </mat-card-subtitle>
+            <small>
+              <mat-icon mat-list-icon>share</mat-icon>
+              <span class="iconText">{{ tweet['retweetCount'] }}</span>
+            </small>
+          </section>
+        </mat-card-title>
 
-          <mat-card-content fxLayoutAlign="start" fxLayout="column">
+        <mat-card-subtitle fxLayout="column">
+          <small *ngIf="tweet['textUrl']">
+            <a [href]="tweet['textUrl']"
+               target="_blank">Full text</a>
+          </small>
+        </mat-card-subtitle>
 
-            <section class="authors">
-              <h6>Objective:
-                <a [href]="tweet['targetUser']['profileURL']"
-                   target="_blank">{{ tweet['targetUser']['userName'] }}</a>
-                <mat-card-subtitle>{{ tweet['targetUser']['description'] }}</mat-card-subtitle>
-              </h6>
-              <h6 *ngIf="tweet['originalAuthor']">Tweet's Author:
-                <a [href]="tweet['originalAuthor']['profileURL']"
-                   target="_blank">{{ tweet['originalAuthor']['userName'] }} </a>
-                <mat-card-subtitle>{{ tweet['originalAuthor']['description'] }}</mat-card-subtitle>
-              </h6>
-            </section>
-          </mat-card-content>
-        </mat-card>
-      </section>
+        <mat-card-content fxLayoutAlign="start" fxLayout="column">
 
-      <!--Sort criteria-->
-      <section class="sorting" fxLayoutAlign="end start" fxLayoutAlign.lt-md="center center" fxFlex="450px 0" fxFlexOrder.lt-md="1">
-        <mat-form-field>
-          <mat-select placeholder="Sort criteria" [(ngModel)]="orderBy">
-            <mat-option *ngFor="let criteria of sortCriteriaOptions" [value]="criteria.value">
-              {{ criteria.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-radio-group [(ngModel)]="direction" fxLayout="column">
-          <mat-radio-button *ngFor="let direction of directionOptions"
-                            [value]="direction">{{ direction }}</mat-radio-button>
-        </mat-radio-group>
-
-        <button fxFlex="130px"
-                mat-button
-                *ngIf="orderBy"
-                color="primary"
-                (click)="onSortSelector()">Apply changes</button>
-      </section>
+          <section class="authors">
+            <h6>Objective:
+              <a [href]="tweet['targetUser']['profileURL']"
+                 target="_blank">{{ tweet['targetUser']['userName'] }}</a>
+              <mat-card-subtitle>{{ tweet['targetUser']['description'] }}</mat-card-subtitle>
+            </h6>
+            <h6 *ngIf="tweet['originalAuthor']">Tweet's Author:
+              <a [href]="tweet['originalAuthor']['profileURL']"
+                 target="_blank">{{ tweet['originalAuthor']['userName'] }} </a>
+              <mat-card-subtitle>{{ tweet['originalAuthor']['description'] }}</mat-card-subtitle>
+            </h6>
+          </section>
+        </mat-card-content>
+      </mat-card>
     </section>
 
-    <mat-paginator [length]="totalCount"
-                   [pageSize]="size"
-                   (page)="onPaginator($event)"
-                   [pageSizeOptions]="pageSizeOptions">
-    </mat-paginator>
+    <!--Sort criteria-->
+    <section class="sorting" fxLayoutAlign="end start" fxLayoutAlign.lt-md="center center" fxFlex="450px 0" fxFlexOrder.lt-md="1">
+      <mat-form-field>
+        <mat-select placeholder="Sort criteria" [(ngModel)]="orderBy">
+          <mat-option *ngFor="let criteria of sortCriteriaOptions" [value]="criteria.value">
+            {{ criteria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-radio-group [(ngModel)]="direction" fxLayout="column">
+        <mat-radio-button *ngFor="let direction of directionOptions"
+                          [value]="direction">{{ direction }}</mat-radio-button>
+      </mat-radio-group>
+
+      <button fxFlex="130px"
+              mat-button
+              *ngIf="orderBy"
+              color="primary"
+              (click)="onSortSelector()">Apply changes</button>
+    </section>
   </section>
 
-  <ng-template #noData>
-    <section fxLayoutAlign="center">
-      <p>Any tweets here (</p>
-    </section>
-  </ng-template>
-</ng-template>
+  <mat-paginator [length]="totalCount"
+                 [pageSize]="size"
+                 (page)="onPaginator($event)"
+                 [pageSizeOptions]="pageSizeOptions">
+  </mat-paginator>
+</section>
+
+<section fxLayoutAlign="center" *ngIf="tweets && tweets.length == 0">
+  <p>Any tweets here (</p>
+</section>

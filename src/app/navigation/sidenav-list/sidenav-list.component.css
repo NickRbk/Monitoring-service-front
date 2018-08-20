@@ -6,3 +6,7 @@ a {
 a:hover, a:active {
   color: lightgray;
 }
+
+mat-nav-list {
+  height: 100%;
+}

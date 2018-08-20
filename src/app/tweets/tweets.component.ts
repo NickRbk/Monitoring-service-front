@@ -14,7 +14,6 @@ import {SortCriteria} from '../shared/model/sort-criteria.model';
 export class TweetsComponent implements OnInit, OnDestroy {
 
   onLoading = true;
-  onPaginatorChange = false;
   private errorSub: Subscription;
 
   page = 0;
@@ -47,33 +46,25 @@ export class TweetsComponent implements OnInit, OnDestroy {
     this.errorSub = this.errorService.errorListener
       .subscribe(error => this.error = error);
 
-    this.tweetService.fetchTweets(this.page, this.size, this.orderBy, this.direction)
-      .then((res) => {
-        this.totalCount = res['totalElements'];
-        this.tweets = res['content'];
-        this.onLoading = false;
-      });
+    this.fetchTweets(this.page, this.size, this.orderBy, this.direction);
   }
 
   onPaginator(pageEvent: PageEvent) {
-    document.querySelector('#header').scrollIntoView();
     this.page = pageEvent['pageIndex'];
     this.size = pageEvent['pageSize'];
 
-    this.onPaginatorChange = true;
-    this.tweetService.fetchTweets(this.page, this.size, this.orderBy, this.direction)
-      .then(
-        res => {
-          this.totalCount = res['totalElements'];
-          this.tweets = res['content'];
-          this.onPaginatorChange = false;
-        }
-      );
+    this.fetchTweets(this.page, this.size, this.orderBy, this.direction);
   }
 
   onSortSelector() {
+    this.fetchTweets(0, this.size, this.orderBy, this.direction);
+  }
+
+  private fetchTweets(page: number, size: number, orderBy: string, direction: string) {
     this.onLoading = true;
-    this.tweetService.fetchTweets(0, this.size, this.orderBy, this.direction)
+
+    document.querySelector('#header').scrollIntoView();
+    this.tweetService.fetchTweets(page, size, orderBy, direction)
       .then(
         res => {
           this.totalCount = res['totalElements'];
