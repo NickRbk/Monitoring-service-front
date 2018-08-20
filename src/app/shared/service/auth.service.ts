@@ -79,6 +79,29 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
   }
 
+  updateCustomer(customer: CustomerSignup) {
+    this.httpClient.patch(this.envConst.BACKEND_URL + '/auth', customer)
+      .subscribe(
+        () => {
+          localStorage.setItem('c:email', customer.email);
+          localStorage.setItem('c:firstName', customer.firstName);
+          localStorage.setItem('c:lastName', customer.lastName);
+          localStorage.setItem('c:phoneNumber', customer.phoneNumber);
+
+          this.logIn(customer.email, customer.password);
+        },
+        err => this.errorService.triggerErrorMessage(err['message'])
+      );
+  }
+
+  deleteCustomer() {
+    this.httpClient.delete(this.envConst.BACKEND_URL + '/auth')
+      .subscribe(
+        () => this.logout(),
+        err => this.errorService.triggerErrorMessage(err['message'])
+      );
+  }
+
   autoAuthUser() {
     const authInfo = this.getAuthData();
     if (!authInfo) {

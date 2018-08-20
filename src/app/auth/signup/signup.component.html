@@ -6,12 +6,20 @@
 </section>
 
 <ng-template #mainBlock>
-  <section class="signup-form">
+  <section class="signup-form" fxLayoutAlign="center center">
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()"
+          fxFlex="300px"
+          fxFlex.xs="80%"
+          fxLayoutGap="10px"
           fxLayout="column"
-          *ngIf="!error; else errorBlock"
-          fxLayoutAlign="center center"
-          fxLayoutGap="10px">
+          *ngIf="!error; else errorBlock">
+
+      <mat-card-actions *ngIf="editMode" fxLayoutAlign="space-between">
+        <button mat-raised-button type="submit" [disabled]="signupForm.invalid">
+          UPDATE
+        </button>
+        <button mat-button color="warn" type="button" (click)="onCancel()">CANCEL</button>
+      </mat-card-actions>
 
       <!--First name-->
       <mat-form-field>
@@ -63,12 +71,17 @@
         <mat-error align="end">Has to be at least 6 characters long</mat-error>
       </mat-form-field>
 
-      <!--Checker-->
-      <mat-checkbox formControlName="agree" color="primary">Agree to Terms and Conditions.</mat-checkbox>
+      <section *ngIf="!editMode">
+        <mat-checkbox formControlName="agree" color="primary">Agree to Terms and Conditions.</mat-checkbox>
 
-      <button type="submit" mat-raised-button color="primary" [disabled]="signupForm.invalid">
-        Submit
-      </button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="signupForm.invalid">
+          Submit
+        </button>
+      </section>
+
+      <mat-card-actions *ngIf="editMode" fxFlexAlign="end">
+        <button mat-raised-button color="warn" type="button" (click)="onRemove()">DELETE</button>
+      </mat-card-actions>
     </form>
 
     <ng-template #errorBlock>

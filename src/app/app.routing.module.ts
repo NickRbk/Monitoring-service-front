@@ -12,6 +12,7 @@ const appRoutes: Routes = [
   {path: '', component: WelcomeComponent, pathMatch: 'full'},
   {path: 'signup', component: SignupComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'user/:id', component: SignupComponent, canActivate: [AuthGuard]},
   {path: 'objectives', canActivate: [AuthGuard], children: [
       {path: '', component: ObjectivesComponent},
       {path: 'new', component: EditObjectiveComponent},
