@@ -19,5 +19,9 @@ a:hover, a:active {
 }
 
 #currentUser {
-  font-size: small;
+  font-size: medium;
+}
+
+a {
+  height: 100%;
 }

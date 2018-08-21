@@ -9,7 +9,7 @@
   <section class="signup-form" fxLayoutAlign="center center">
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()"
           fxFlex="300px"
-          fxFlex.xs="80%"
+          fxFlex.md-xs="80%"
           fxLayoutGap="10px"
           fxLayout="column"
           *ngIf="!error; else errorBlock">

@@ -1,11 +1,14 @@
-<mat-toolbar color="primary">
-  <div fxHide.gt-xs>
-    <button mat-icon-button
-            (click)="onToggleSideNav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-  <div><a routerLink="/">Monitoring Service</a></div>
+<mat-toolbar color="primary" fxLayoutAlign="space-between center">
+  <section fxLayout fxLayoutAlign="end center">
+    <div fxHide.gt-xs>
+      <button mat-icon-button
+              (click)="onToggleSideNav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div><a routerLink="/">MS</a></div>
+  </section>
+
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout class="navigation-items"
         fxLayoutGap="10px"
@@ -19,6 +22,7 @@
     </ul>
     <ng-template #authorized>
       <ul fxLayout class="navigation-items"
+          fxLayoutAlign="center center"
           fxLayoutGap="10px">
         <li>
           <a routerLink="/objectives">Objectives</a>
@@ -26,11 +30,25 @@
         <li>
           <a routerLink="/media">Tweets</a>
         </li>
-        <li id="currentUser">{{ currentUser['email'] }} | {{ currentUser['firstName'] }} {{ currentUser['lastName'] }}</li>
         <li>
-          <a routerLink="/" (click)="onLogout()">Logout</a>
+          <button mat-icon-button routerLink="/user/1">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+        </li>
+        <li id="currentUser">
+          Hi, {{ currentUser.firstName }} {{ currentUser.lastName }}
+        </li>
+        <li>
+          <button mat-icon-button routerLink="/" (click)="onLogout()">
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
         </li>
       </ul>
     </ng-template>
+  </div>
+  <div *ngIf="currentUser" fxHide.gt-xs>
+    <button mat-icon-button routerLink="/user/1">
+      <mat-icon>account_circle</mat-icon>
+    </button>
   </div>
 </mat-toolbar>
